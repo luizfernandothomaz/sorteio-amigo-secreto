@@ -1,0 +1,42 @@
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: #fbf6f0;
+  color: #2b2321;
+}
+.container { max-width: 640px; margin: 0 auto; padding: 24px 16px 64px; }
+h1 { font-size: 28px; margin: 0 0 4px; }
+h2 { font-size: 18px; margin: 0 0 8px; }
+.card { background: #fff; border-radius: 14px; padding: 16px; margin: 16px 0; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+.muted { color: #7a6f6a; }
+.small { font-size: 13px; }
+label { display: flex; flex-direction: column; gap: 6px; font-weight: 600; }
+label.check { flex-direction: row; align-items: center; gap: 8px; font-weight: 500; }
+input, select { font: inherit; padding: 10px 12px; border: 1px solid #d9cfc8; border-radius: 10px; width: 100%; background: #fff; }
+input[type="checkbox"] { width: 20px; height: 20px; }
+.row { display: flex; gap: 8px; align-items: center; margin: 8px 0; }
+.row.between { justify-content: space-between; }
+button, .btn {
+  font: inherit; border: 0; border-radius: 10px; padding: 10px 14px; cursor: pointer;
+  text-decoration: none; display: inline-block; text-align: center; white-space: nowrap;
+}
+button:disabled { opacity: .5; cursor: default; }
+.primary { background: #c0392b; color: #fff; font-weight: 600; width: 100%; padding: 14px; }
+.row .primary { width: auto; flex: 1; }
+.secondary { background: #f1e8e1; color: #2b2321; }
+.danger { background: #fff; color: #c0392b; border: 1px solid #c0392b; }
+.whatsapp { background: #25d366; color: #fff; }
+.icon { background: transparent; color: #7a6f6a; padding: 8px; }
+.error { color: #c0392b; background: #fdecea; padding: 10px 12px; border-radius: 10px; }
+.warn { background: #fff4d6; padding: 10px 12px; border-radius: 10px; font-size: 14px; }
+.notice { background: #e8f6ec; padding: 10px 12px; border-radius: 10px; }
+.counter { text-align: center; font-size: 18px; }
+.counter strong { font-size: 24px; color: #c0392b; }
+.participant { display: flex; justify-content: space-between; gap: 8px; padding: 12px 0; border-top: 1px solid #f1e8e1; flex-wrap: wrap; }
+.actions { display: flex; gap: 6px; flex-wrap: wrap; }
+.actions .btn, .actions button { padding: 8px 10px; font-size: 14px; }
+.result { color: #c0392b; font-weight: 600; }
+.reveal { text-align: center; padding: 32px 16px; margin-top: 15vh; }
+.reveal .big { font-size: 40px; font-weight: 800; color: #c0392b; margin: 16px 0; }
+ul { padding-left: 20px; }
