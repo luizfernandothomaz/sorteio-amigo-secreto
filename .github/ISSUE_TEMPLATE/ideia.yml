@@ -1,0 +1,24 @@
+name: Ideia ou melhoria
+description: Sugira uma funcionalidade nova
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problema
+    attributes:
+      label: Qual problema isso resolve
+    validations:
+      required: true
+  - type: textarea
+    id: proposta
+    attributes:
+      label: Como você imagina que funcione
+    validations:
+      required: true
+  - type: dropdown
+    id: pr
+    attributes:
+      label: Você pretende implementar?
+      options:
+        - Sim, vou abrir um pull request
+        - Talvez, se alguém me orientar
+        - Não, é só uma sugestão

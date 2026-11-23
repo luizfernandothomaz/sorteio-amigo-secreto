@@ -1,0 +1,10 @@
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+
+// Em dev, o Vite roda na 5173 e repassa /api para o .NET na 5080.
+// No build, o resultado vai direto para api/wwwroot, servido pelo próprio .NET.
+export default defineConfig({
+  plugins: [react()],
+  server: { proxy: { "/api": "http://127.0.0.1:5080" } },
+  build: { outDir: "../api/wwwroot", emptyOutDir: true },
+});

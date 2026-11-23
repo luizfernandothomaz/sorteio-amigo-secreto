@@ -1,0 +1,26 @@
+name: Bug
+description: Algo não funciona como deveria
+labels: [bug]
+body:
+  - type: textarea
+    id: o-que-aconteceu
+    attributes:
+      label: O que aconteceu
+      description: O que você esperava e o que viu no lugar.
+    validations:
+      required: true
+  - type: textarea
+    id: passos
+    attributes:
+      label: Como reproduzir
+      placeholder: "1. Criei um grupo com...\n2. Cliquei em...\n3. Apareceu..."
+    validations:
+      required: true
+  - type: input
+    id: ambiente
+    attributes:
+      label: Navegador e aparelho
+      placeholder: Safari no iPhone 15, Chrome no Windows...
+  - type: markdown
+    attributes:
+      value: "Não cole links `/r/...` nem `/g/...?key=...`: eles dão acesso ao grupo."

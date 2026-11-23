@@ -1,0 +1,6 @@
+**/node_modules
+**/bin
+**/obj
+api/wwwroot
+**/data
+.git
