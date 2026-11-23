@@ -109,10 +109,16 @@ cd ../api && PORT=5080 dotnet run        # http://localhost:5080
 
 ## Deploy no Railway
 
-1. No Railway: **New Project → Deploy from GitHub repo**. O `Dockerfile` da raiz é detectado sozinho.
-2. **Adicione um Volume** montado em `/data`. Sem ele, os grupos somem a cada deploy.
-3. Em **Settings → Networking**, gere o domínio público.
-4. Defina as variáveis da tabela acima, principalmente `PUBLIC_BASE_URL` (atrás de proxy, evita links com o host errado).
+O repositório já traz o `Dockerfile` e o `railway.json` (build por Dockerfile e verificação de saúde em `/api/config`).
+
+1. No Railway: **New Project → Deploy from GitHub repo** e escolha este repositório. Se ele for privado, autorize o app do Railway no GitHub.
+2. Em **Settings → Source**, confirme a branch que será publicada (normalmente a `main`).
+3. **Adicione um Volume** montado em `/data`. Sem ele, os grupos somem a cada deploy.
+4. Em **Settings → Networking**, clique em **Generate Domain**.
+5. Em **Variables**, defina `PUBLIC_BASE_URL` com o domínio gerado, por exemplo `https://amigo-secreto.up.railway.app`.
+6. Faça o deploy e abra o domínio. A landing deve carregar, e criar um grupo deve funcionar.
+
+O Railway define a variável `PORT` sozinho, e o `Dockerfile` já aponta o banco para `/data/db.json`. Para atualizar, basta dar push na branch publicada.
 
 ## Estrutura do projeto
 
@@ -130,6 +136,7 @@ cd ../api && PORT=5080 dotnet run        # http://localhost:5080
 │       └── styles.css
 ├── docs/screenshots/
 ├── Dockerfile             # build do front + API
+├── railway.json           # configuração do deploy no Railway
 └── CONTRIBUTING.md
 ```
 
