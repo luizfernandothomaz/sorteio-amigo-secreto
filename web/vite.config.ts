@@ -5,6 +5,6 @@ import react from "@vitejs/plugin-react";
 // No build, o resultado vai direto para api/wwwroot, servido pelo próprio .NET.
 export default defineConfig({
   plugins: [react()],
-  server: { proxy: { "/api": "http://localhost:5080" } },
+  server: { proxy: { "/api": "http://127.0.0.1:5080" } },
   build: { outDir: "../api/wwwroot", emptyOutDir: true },
 });
