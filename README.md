@@ -46,7 +46,7 @@ Todo fim de ano alguém vira o organizador de um amigo secreto: junta os nomes, 
 - **Link de visualização única:** cada link fica preso ao primeiro aparelho que abrir. Em outro aparelho aparece o aviso "já foi aberto".
 - **Link novo:** invalida o link antigo de um participante. **Refazer sorteio** gera links novos para todos.
 - **Acompanhamento:** contador "X de N já viram" no painel do organizador, atualizado a cada 10 segundos.
-- **Envio:** botão de WhatsApp com a mensagem pronta, botão de copiar link e envio por e-mail via [Resend](https://resend.com).
+- **Envio:** botão de WhatsApp com a mensagem pronta e botão de copiar o link.
 - **Organizador opcional:** você escolhe se o organizador pode ver o resultado ou não.
 
 ## Telas
@@ -105,10 +105,7 @@ cd ../api && PORT=5080 dotnet run        # http://localhost:5080
 |---|---|---|---|
 | `PORT` | não | Porta da API | `5080` |
 | `PUBLIC_BASE_URL` | recomendada em produção | Base dos links enviados. Se ausente, usa o host da requisição | `https://amigo-secreto.up.railway.app` |
-| `RESEND_API_KEY` | só para e-mail | Chave da API do Resend | `re_xxx` |
-| `RESEND_FROM` | só para e-mail | Remetente verificado | `Amigo Secreto <sorteio@seudominio.com.br>` |
 
-> **Resend:** o remetente de teste `onboarding@resend.dev` só entrega para o e-mail dono da conta. Para enviar para a família, verifique um domínio seu no Resend.
 
 ## Deploy no Railway
 
@@ -125,7 +122,6 @@ cd ../api && PORT=5080 dotnet run        # http://localhost:5080
 │   ├── Program.cs         # rotas e regras
 │   ├── DrawService.cs     # algoritmo do sorteio
 │   ├── JsonStore.cs       # armazenamento em arquivo (POC)
-│   ├── EmailService.cs    # envio via Resend
 │   └── Models.cs
 ├── web/                   # front React + Vite + TypeScript
 │   └── src/
@@ -146,7 +142,6 @@ cd ../api && PORT=5080 dotnet run        # http://localhost:5080
 | PUT | `/api/groups/{id}?key=` | Edita o grupo (apaga o sorteio) |
 | POST | `/api/groups/{id}/draw?key=` | Sorteia ou refaz o sorteio |
 | POST | `/api/groups/{id}/participants/{pid}/resend?key=` | Gera link novo para um participante |
-| POST | `/api/groups/{id}/send-emails?key=` | Envia e-mail para quem ainda não recebeu |
 | POST | `/api/reveal/{token}` | Participante revela o resultado (`{ deviceId }`) |
 
 ## Privacidade e segurança
@@ -163,7 +158,6 @@ São da POC, não do produto final:
 - Armazenamento em arquivo JSON. O plano é migrar para PostgreSQL (EF Core + Npgsql).
 - Sem login nem tela para editar o grupo depois de criado (a API já tem `PUT /api/groups/{id}`).
 - O vínculo do link usa o `localStorage`: aba anônima ou navegador limpo contam como "outro aparelho". A saída é o botão "Link novo".
-- O envio de e-mail ainda não foi testado contra o Resend real.
 - Não há testes automatizados.
 
 ## Roadmap
