@@ -17,9 +17,9 @@ React + .NET 10. O organizador cria o grupo, cadastra os pares proibidos, sortei
 Pré-requisitos: .NET 10 SDK e Node 22.
 
 ```bash
-# terminal 1 — API na porta 5000
+# terminal 1 — API na porta 5080
 cd api
-PORT=5000 dotnet run
+PORT=5080 dotnet run
 
 # terminal 2 — front com hot reload em http://localhost:5173
 cd web
@@ -31,7 +31,7 @@ Ou tudo junto, igual em produção:
 
 ```bash
 cd web && npm install && npm run build   # gera api/wwwroot
-cd ../api && PORT=5000 dotnet run        # http://localhost:5000
+cd ../api && PORT=5080 dotnet run        # http://localhost:5080
 ```
 
 ## Deploy no Railway
