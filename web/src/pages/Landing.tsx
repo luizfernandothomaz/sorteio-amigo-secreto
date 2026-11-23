@@ -9,7 +9,7 @@ const steps = [
 const features = [
   { i: "💑", t: "Pares proibidos", d: "Casais e família não se tiram, nos dois sentidos." },
   { i: "🔒", t: "Link de visualização única", d: "Cada link fica preso ao primeiro aparelho que abrir." },
-  { i: "💬", t: "WhatsApp ou e-mail", d: "Mensagem pronta para enviar a quem não tem e-mail." },
+  { i: "💬", t: "Pronto para o WhatsApp", d: "Mensagem pronta com o link de cada pessoa, ou copie e envie como preferir." },
   { i: "👀", t: "Quem já viu", d: "Acompanhe o contador “X de N já viram” no painel." },
 ];
 

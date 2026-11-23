@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { call, type GroupView, type ParticipantView } from "../api";
+import { call, useEmailEnabled, type GroupView, type ParticipantView } from "../api";
 
 const time = (iso: string) => new Date(iso).toLocaleString("pt-BR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
 
@@ -9,6 +9,7 @@ export function Panel({ id, adminKey }: { id: string; adminKey: string }) {
   const [notice, setNotice] = useState("");
   const [showResult, setShowResult] = useState(false);
   const [busy, setBusy] = useState(false);
+  const emailEnabled = useEmailEnabled();
   const base = `/api/groups/${id}`;
   const q = `?key=${encodeURIComponent(adminKey)}`;
 
@@ -62,7 +63,7 @@ export function Panel({ id, adminKey }: { id: string; adminKey: string }) {
       {!group.drawnAt ? (
         <section className="card">
           <h2>Participantes ({group.total})</h2>
-          <ul>{group.participants.map((p) => <li key={p.id}>{p.name}{p.email && <span className="muted"> · {p.email}</span>}</li>)}</ul>
+          <ul>{group.participants.map((p) => <li key={p.id}>{p.name}{emailEnabled && p.email && <span className="muted"> · {p.email}</span>}</li>)}</ul>
           {group.restrictions.length > 0 && (
             <>
               <h2>Pares proibidos</h2>
@@ -95,7 +96,7 @@ export function Panel({ id, adminKey }: { id: string; adminKey: string }) {
                   {showResult && p.assignedTo && <span className="result"> → {p.assignedTo}</span>}
                   <div className="muted small">
                     {p.viewedAt ? `✅ viu em ${time(p.viewedAt)}` : "⏳ ainda não viu"}
-                    {p.email && (p.emailSentAt ? " · 📧 e-mail enviado" : " · 📧 e-mail pendente")}
+                    {emailEnabled && p.email && (p.emailSentAt ? " · 📧 e-mail enviado" : " · 📧 e-mail pendente")}
                   </div>
                 </div>
                 <div className="actions">
@@ -113,7 +114,7 @@ export function Panel({ id, adminKey }: { id: string; adminKey: string }) {
           {notice && <p className="notice">{notice}</p>}
           {error && <p className="error">{error}</p>}
           <div className="row">
-            <button className="primary" disabled={busy} onClick={sendEmails}>Enviar e-mails</button>
+            {emailEnabled && <button className="primary" disabled={busy} onClick={sendEmails}>Enviar e-mails</button>}
             <button className="danger" disabled={busy}
               onClick={() => action("POST", "/draw", "Refazer o sorteio? Todos os links atuais deixam de funcionar.")}>
               Refazer sorteio

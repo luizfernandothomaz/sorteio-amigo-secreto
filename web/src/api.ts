@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 export type ParticipantView = {
   id: string;
   name: string;
@@ -50,4 +52,15 @@ export function deviceId(): string {
   } catch {
     return (window as any).__deviceId ??= crypto.randomUUID();
   }
+}
+
+/** Diz se o servidor tem o envio de e-mail configurado. Falso até a resposta chegar. */
+export function useEmailEnabled(): boolean {
+  const [enabled, setEnabled] = useState(false);
+  useEffect(() => {
+    call<{ emailEnabled: boolean }>("GET", "/api/config")
+      .then((c) => setEnabled(c.emailEnabled))
+      .catch(() => setEnabled(false));
+  }, []);
+  return enabled;
 }

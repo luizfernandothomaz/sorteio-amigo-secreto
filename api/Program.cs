@@ -19,6 +19,9 @@ app.UseStaticFiles();
 
 var api = app.MapGroup("/api");
 
+// O front usa isto para esconder o que depende do e-mail enquanto o Resend não estiver configurado.
+api.MapGet("/config", (EmailService email) => Results.Ok(new { emailEnabled = email.Configured }));
+
 // ---------- Organizador ----------
 
 api.MapPost("/groups", (GroupInput input, JsonStore store) =>

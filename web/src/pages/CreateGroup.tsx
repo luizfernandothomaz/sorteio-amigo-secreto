@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { call, type GroupInput } from "../api";
+import { call, useEmailEnabled, type GroupInput } from "../api";
 import { Brand, IconNoHeart, IconPlus, IconX } from "../components";
 
 type Person = { name: string; email: string };
@@ -17,6 +17,7 @@ export function CreateGroup() {
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
 
+  const emailEnabled = useEmailEnabled();
   const names = people.map((p) => p.name.trim()).filter(Boolean);
 
   const setPerson = (i: number, patch: Partial<Person>) =>
@@ -68,13 +69,13 @@ export function CreateGroup() {
           <h2>Participantes</h2>
           <span className="pill">{names.length === 1 ? "1 pessoa" : `${names.length} pessoas`}</span>
         </div>
-        <p className="muted">E-mail é opcional. Quem não tiver recebe o link pelo WhatsApp.</p>
+        <p className="muted">{emailEnabled ? "E-mail é opcional. Quem não tiver recebe o link pelo WhatsApp." : "Cada pessoa recebe um link para abrir no celular. Você envia pelo WhatsApp."}</p>
         {people.map((p, i) => (
           <div className="item" key={i}>
             <span className="num">{i + 1}</span>
             <div className="fields">
               <input aria-label="Nome" placeholder="Nome" value={p.name} onChange={(e) => setPerson(i, { name: e.target.value })} />
-              <input aria-label="E-mail" placeholder="E-mail (opcional)" type="email" value={p.email} onChange={(e) => setPerson(i, { email: e.target.value })} />
+              {emailEnabled && <input aria-label="E-mail" placeholder="E-mail (opcional)" type="email" value={p.email} onChange={(e) => setPerson(i, { email: e.target.value })} />}
             </div>
             <button className="icon" aria-label="Remover participante" onClick={() => setPeople(people.filter((_, idx) => idx !== i))}><IconX /></button>
           </div>
