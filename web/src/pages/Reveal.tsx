@@ -23,6 +23,7 @@ export function Reveal({ token }: { token: string }) {
   if (result)
     return (
       <section className="card reveal">
+        <span className="gift">🎁</span>
         <p className="muted">{result.group}</p>
         <h2>{result.name}, você tirou:</h2>
         <p className="big">{result.receiver}</p>
@@ -32,7 +33,7 @@ export function Reveal({ token }: { token: string }) {
 
   return (
     <section className="card reveal">
-      <h1>🎁</h1>
+      <span className="gift">🎁</span>
       <h2>Seu amigo secreto</h2>
       <p className="muted">Abra só no seu celular. O link fica preso ao primeiro aparelho que abrir.</p>
       {error && <p className="error">{error}</p>}
