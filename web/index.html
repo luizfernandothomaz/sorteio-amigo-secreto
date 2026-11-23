@@ -12,5 +12,16 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <!-- GoatCounter: conta só "/" e "/novo". Os links secretos (/r/ e /g/) nunca são enviados. -->
+    <script>window.goatcounter = { no_onload: true };</script>
+    <script data-goatcounter="https://amigosecreto.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <script>
+      window.addEventListener("load", function () {
+        var p = location.pathname;
+        if ((p === "/" || p === "/novo") && window.goatcounter && window.goatcounter.count) {
+          window.goatcounter.count({ path: p });
+        }
+      });
+    </script>
   </body>
 </html>
