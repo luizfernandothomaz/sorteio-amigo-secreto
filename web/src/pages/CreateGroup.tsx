@@ -1,21 +1,64 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { call, useEmailEnabled, type GroupInput } from "../api";
 import { Brand, IconNoHeart, IconPlus, IconX } from "../components";
 
 type Person = { name: string; email: string };
 type Pair = { a: string; b: string };
+type Draft = { name: string; people: Person[]; pairs: Pair[]; organizerSeesResult: boolean };
+
+const DRAFT_KEY = "amigo-secreto-rascunho";
+const emptyDraft = (): Draft => ({
+  name: "Amigo Secreto de Natal",
+  people: [
+    { name: "", email: "" },
+    { name: "", email: "" },
+    { name: "", email: "" },
+  ],
+  pairs: [],
+  organizerSeesResult: true,
+});
+
+/** Rascunho guardado só nesta aba (sessionStorage): sobrevive ao voltar e ao recarregar, e some ao fechar a aba. */
+function loadDraft(): Draft {
+  try {
+    const raw = sessionStorage.getItem(DRAFT_KEY);
+    if (raw) {
+      const d = JSON.parse(raw) as Partial<Draft>;
+      if (typeof d.name === "string" && Array.isArray(d.people) && d.people.length > 0 && Array.isArray(d.pairs)) {
+        return { ...emptyDraft(), ...d } as Draft;
+      }
+    }
+  } catch {
+    /* sem storage ou rascunho inválido: começa vazio */
+  }
+  return emptyDraft();
+}
 
 export function CreateGroup() {
-  const [name, setName] = useState("Amigo Secreto de Natal");
-  const [people, setPeople] = useState<Person[]>([
-    { name: "", email: "" },
-    { name: "", email: "" },
-    { name: "", email: "" },
-  ]);
-  const [pairs, setPairs] = useState<Pair[]>([]);
-  const [organizerSeesResult, setOrganizerSeesResult] = useState(true);
+  const [initial] = useState(loadDraft);
+  const [name, setName] = useState(initial.name);
+  const [people, setPeople] = useState<Person[]>(initial.people);
+  const [pairs, setPairs] = useState<Pair[]>(initial.pairs);
+  const [organizerSeesResult, setOrganizerSeesResult] = useState(initial.organizerSeesResult);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+
+  useEffect(() => {
+    try {
+      sessionStorage.setItem(DRAFT_KEY, JSON.stringify({ name, people, pairs, organizerSeesResult }));
+    } catch {
+      /* ignora: o formulário funciona sem rascunho */
+    }
+  }, [name, people, pairs, organizerSeesResult]);
+
+  function clearForm() {
+    const d = emptyDraft();
+    setName(d.name);
+    setPeople(d.people);
+    setPairs(d.pairs);
+    setOrganizerSeesResult(d.organizerSeesResult);
+    setError("");
+  }
 
   const emailEnabled = useEmailEnabled();
   const names = people.map((p) => p.name.trim()).filter(Boolean);
@@ -55,6 +98,7 @@ export function CreateGroup() {
       <div className="pagehead">
         <h1>Criar grupo</h1>
         <p className="muted">Crie o grupo, sorteie e mande um link para cada pessoa.</p>
+        <button className="link" onClick={clearForm}>Limpar formulário</button>
       </div>
 
       <section className="card">
